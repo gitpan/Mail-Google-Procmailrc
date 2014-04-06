@@ -1,0 +1,10 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/Mail-Google-Procmailrc.t
+lib/Mail/Google/Procmailrc.pm
+bin/google-to-procmailrc
+bin/process-mail
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)

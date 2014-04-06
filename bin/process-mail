@@ -1,0 +1,10 @@
+#!/bin/bash
+########### sample procmail wrapper ################
+MDIR="/somepath/Mail/mailaccount/INBOX"
+for dir in cur new; do
+    sdir="$MDIR/$dir"
+    find "$sdir" -type f | while read file; do
+        echo "$file"
+        procmail generated-procmailrc < "$file"
+    done
+done

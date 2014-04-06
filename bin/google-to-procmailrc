@@ -1,0 +1,15 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use lib './lib';
+use Mail::Google::Procmailrc;
+
+# Usage: 
+# ./bin/google-to-procmailrc ./stefanp.xml meow.rc $HOME/purr
+
+
+# TODO: use GetOpt::Long to make some treat
+#       command-line arguments properly
+my $o = Mail::Google::Procmailrc->new($ARGV[2]);
+$o->convert($ARGV[0],$ARGV[1]);
+

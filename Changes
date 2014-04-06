@@ -1,0 +1,7 @@
+Revision history for Perl extension Mail::Google::Procmailrc.
+
+0.01  Sun Apr  6 01:12:36 2014
+        - first-release
+	- original version; created by h2xs 1.23 with options
+		-A -X -n Mail::Google::Procmailrc
+
