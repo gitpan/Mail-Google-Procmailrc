@@ -1,5 +1,5 @@
 package Mail::Google::Procmailrc;
-use 5.018002;
+use 5.010000;
 use strict;
 use warnings;
 use XML::Fast;
@@ -10,7 +10,7 @@ our @ISA = qw(Exporter);
 our %EXPORT_TAGS = ( 'all' => [ qw(  ) ] );
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw( );
-our $VERSION = '0.02';
+our $VERSION = '0.021';
 =head1 NAME
 
 Mail::Google::Procmailrc - Perl module that allows easy conversion from Gmail mail filters to Procmail rules

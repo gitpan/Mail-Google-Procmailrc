@@ -1,5 +1,8 @@
 Revision history for Perl extension Mail::Google::Procmailrc.
 
+0.021  Sun Apr  7 19:22:00 2014
+        - Fixed Perl version required
+        - Added EXE_FILES to Makefile.PL
 0.02  Sun Apr  7 18:15:36 2014
         - Fixed documentation
         - Added proper Getopt::Long treatment of cmdline args in ./bin/google-to-procmailrc

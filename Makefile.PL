@@ -7,6 +7,9 @@ WriteMakefile(
         'XML::Fast'     => '0.11',
         'Getopt::Long'  => '2.42',
     },
+    EXE_FILES         => [
+        'bin/google-to-procmailrc',
+    ],
     ($] >= 5.005 ?
       (ABSTRACT_FROM  => 'lib/Mail/Google/Procmailrc.pm', 
        AUTHOR         => 'Stefan Petrea <stefan@garage-coding.com>') : ()),
