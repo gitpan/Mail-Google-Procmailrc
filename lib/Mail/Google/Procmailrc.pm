@@ -10,7 +10,48 @@ our @ISA = qw(Exporter);
 our %EXPORT_TAGS = ( 'all' => [ qw(  ) ] );
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw( );
-our $VERSION = '0.01';
+our $VERSION = '0.02';
+=head1 NAME
+
+Mail::Google::Procmailrc - Perl module that allows easy conversion from Gmail mail filters to Procmail rules
+
+=head1 SYNOPSIS
+
+  use Mail::Google::Procmailrc;
+  my $o = Mail::Google::Procmailrc->new(<path-to-mail-folders>);
+  $o->convert(<google-mail-filter-path>, <procmail-rules-output-path>);
+
+or, you can use it with the helper script
+
+  ./bin/google-to-procmailrc ./mailFilters.xml test-procmail.rc $HOME/somemail
+
+=head1 DESCRIPTION
+
+You may want at some point, for some reason to export all your gmail mail rules as
+procmail filters. 
+
+If you use a mail setup involving OfflineIMAP fetching multiple folders(labels) from
+Google, you'll notice that there is a certain overhead involved.
+
+That's because OfflineIMAP needs to tell the IMAP server, which messages it has, in
+order to retrieve only the ones that it doesn't, and then for each new message fetched
+it also needs to update the SQLite local dbs with the statuses of the new messages.
+And it has to do that for every folder(label). That highly depends on which labels you
+fetch with OfflineIMAP.
+
+If you want to make the sync faster, you can consider only fetching the "[Gmail]/All Mail"
+folder or the "INBOX" folder, but then you still have to solve mail triage.
+
+Procmail is quite good for mail triage, but the mailFilters.xml file that you can
+export from Gmail is not suited for use with Procmail AFAIK.
+
+This module aims to solve that problem by converting mailFilters.xml to a set of
+procmail rules (effectively a procmailrc file).
+
+Normally, you'd use the script that comes with this module to migrate your Gmail rules
+to procmail and then you can just maintain the procmail rules. At least that's how I(plan to) use it.
+
+=cut
 
 our $tmplt1= qq{:0:
 * ^From:.*%s.*
@@ -90,7 +131,7 @@ sub adapt {
     my $buf_regular = "";
     my $buf_archive = "";
     my $buf_trash   = "";
-    print join(",",keys %$x)."\n";
+    #print join(",",keys %$x)."\n";
     for my $o (@{ $x->{feed}->{entry} }) {
         next if $o->{title} ne 'Mail Filter';
         next if !exists $o->{"apps:property"};
@@ -182,45 +223,6 @@ sub adapt_rule {
 
 1;
 __END__
-=head1 NAME
-
-Mail::Google::Procmailrc - Perl module that allows easy conversion from Gmail mail filters to Procmail rules
-
-=head1 SYNOPSIS
-
-  use Mail::Google::Procmailrc;
-  my $o = Mail::Google::Procmailrc->new(<path-to-mail-folders>);
-  $o->convert(<google-mail-filter-path>, <procmail-rules-output-path>);
-
-or, you can use it with the helper script
-
-  ./bin/google-to-procmailrc ./mailFilters.xml test-procmail.rc $HOME/somemail
-
-=head1 DESCRIPTION
-
-You may want at some point, for some reason to export all your gmail mail rules as
-procmail filters. 
-
-If you use a mail setup involving OfflineIMAP fetching multiple folders(labels) from
-Google, you'll notice that there is a certain overhead involved.
-
-That's because OfflineIMAP needs to tell the IMAP server, which messages it has, in
-order to retrieve only the ones that it doesn't, and then for each new message fetched
-it also needs to update the SQLite local dbs with the statuses of the new messages.
-And it has to do that for every folder(label). That highly depends on which labels you
-fetch with OfflineIMAP.
-
-If you want to make the sync faster, you can consider only fetching the "[Gmail]/All Mail"
-folder or the "INBOX" folder, but then you still have to solve mail triage.
-
-Procmail is quite good for mail triage, but the mailFilters.xml file that you can
-export from Gmail is not suited for use with Procmail AFAIK.
-
-This module aims to solve that problem by converting mailFilters.xml to a set of
-procmail rules (effectively a procmailrc file).
-
-This is more meant as a one-time use, mostly for transfering your rules to procmail.
-
 =head1 NOTES
 
 If you decide to use B<[Gmail]/All Mail> as the folder you sync and then use procmail
@@ -241,6 +243,10 @@ Currently this module only has functionality for converting some of the gmail ru
 =item L<spamassassin|https://spamassassin.apache.org/>
 
 =back
+
+=head1 BUGS
+
+Please report bugs using the L<rt.cpan.org queue|https://rt.cpan.org/Public/Dist/Display.html?Name=Mail-Google-Procmailrc>.
 
 =head1 PATCHES
 

@@ -3,13 +3,27 @@ use strict;
 use warnings;
 use lib './lib';
 use Mail::Google::Procmailrc;
+use Getopt::Long;
+use Carp;
 
-# Usage: 
-# ./bin/google-to-procmailrc ./stefanp.xml meow.rc $HOME/purr
+my ($input_file,$output_file,$mdir_path,$verbose);
 
+GetOptions (
+    "input=s"     => \$input_file,   
+    "output=s"    => \$output_file,   
+    "mdir-path=s" => \$mdir_path,
+    "verbose"     => \$verbose,
+);
 
-# TODO: use GetOpt::Long to make some treat
-#       command-line arguments properly
-my $o = Mail::Google::Procmailrc->new($ARGV[2]);
-$o->convert($ARGV[0],$ARGV[1]);
+confess '[E] Expected --input param and --output param'
+    if !(defined $input_file && defined $output_file);
+confess '[E] Input file does not exist'
+    if !-f $input_file;
 
+my $default_mdir_path = "$ENV{HOME}/mails";
+print "[W] Using mdir_folder=$mdir_path as --mdir-path was not specified.\n"
+    if !defined $mdir_path;
+$mdir_path //= $default_mdir_path;
+
+my $o = Mail::Google::Procmailrc->new($mdir_path);
+$o->convert($input_file, $output_file);

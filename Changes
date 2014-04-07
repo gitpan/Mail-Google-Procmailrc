@@ -1,5 +1,9 @@
 Revision history for Perl extension Mail::Google::Procmailrc.
 
+0.02  Sun Apr  7 18:15:36 2014
+        - Fixed documentation
+        - Added proper Getopt::Long treatment of cmdline args in ./bin/google-to-procmailrc
+
 0.01  Sun Apr  6 01:12:36 2014
         - first-release
 	- original version; created by h2xs 1.23 with options
