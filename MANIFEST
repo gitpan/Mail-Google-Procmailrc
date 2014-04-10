@@ -2,7 +2,8 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/Mail-Google-Procmailrc.t
+t/01-Procmail-integration.t
+t/00-Mail-Google-Procmailrc.t
 lib/Mail/Google/Procmailrc.pm
 bin/google-to-procmailrc
 bin/process-mail

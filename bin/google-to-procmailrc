@@ -4,26 +4,37 @@ use warnings;
 use lib './lib';
 use Mail::Google::Procmailrc;
 use Getopt::Long;
+use Data::Dumper;
 use Carp;
 
-my ($input_file,$output_file,$mdir_path,$verbose);
+my $c = {
+    input_file  => undef,
+    output_file => undef,
+    mdir_path   => undef,
+    verbose     => undef,
+    debug       => undef,
+};
 
 GetOptions (
-    "input=s"     => \$input_file,   
-    "output=s"    => \$output_file,   
-    "mdir-path=s" => \$mdir_path,
-    "verbose"     => \$verbose,
+    "input=s"     => \$c->{input_file},
+    "output=s"    => \$c->{output_file},
+    "mdir-path=s" => \$c->{mdir_path},
+    "debug"       => \$c->{debug},
+    "verbose"     => \$c->{verbose},
 );
 
+#print Dumper $c;
+
 confess '[E] Expected --input param and --output param'
-    if !(defined $input_file && defined $output_file);
+    if !(defined $c->{input_file} && defined $c->{output_file});
 confess '[E] Input file does not exist'
-    if !-f $input_file;
+    if !-f $c->{input_file};
 
 my $default_mdir_path = "$ENV{HOME}/mails";
-print "[W] Using mdir_folder=$mdir_path as --mdir-path was not specified.\n"
-    if !defined $mdir_path;
-$mdir_path //= $default_mdir_path;
+if(!defined $c->{mdir_path}) {
+    $c->{mdir_path} //= $default_mdir_path;
+    print "[W] Using mdir_folder=$c->{mdir_path} as --mdir-path was not specified.\n";
+};
 
-my $o = Mail::Google::Procmailrc->new($mdir_path);
-$o->convert($input_file, $output_file);
+my $o = Mail::Google::Procmailrc->new($c);
+$o->convert($c->{input_file}, $c->{output_file});

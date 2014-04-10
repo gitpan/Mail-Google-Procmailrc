@@ -1,9 +1,24 @@
 Revision history for Perl extension Mail::Google::Procmailrc.
+0.022  Thu Apr  10 08:35:00 2014
+        - refactored
+        - added more documentation
+        - added rule chain using Procmail's carbon-copy flags (used for archive)
+        - added subject filtering conversion
+        - added inbox directory as catchall rule (mails that came from other rules chains
+          that did not have an archive rule)
+        - added escaping for filter field values
+        - debug mode(--debug) is now functional, it inserts a X-Procmail-Debug: <n> 
+          with the number of the rule that the mail matched
+        - removed the ending column so that procmail
+          takes care of locking. read more about this here 
+          http://pm-doc.sourceforge.net/doc/#local_lockfile_usage
+        - added rule_body to convert "hasTheWord" gmail filters
 
-0.021  Sun Apr  7 19:22:00 2014
+0.021  Mon Apr  7 19:22:00 2014
         - Fixed Perl version required
         - Added EXE_FILES to Makefile.PL
-0.02  Sun Apr  7 18:15:36 2014
+
+0.02  Mon Apr  7 18:15:36 2014
         - Fixed documentation
         - Added proper Getopt::Long treatment of cmdline args in ./bin/google-to-procmailrc
 

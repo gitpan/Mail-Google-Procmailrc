@@ -6,6 +6,7 @@ WriteMakefile(
     PREREQ_PM         => {
         'XML::Fast'     => '0.11',
         'Getopt::Long'  => '2.42',
+        'Email::Simple' => '2.203',
     },
     EXE_FILES         => [
         'bin/google-to-procmailrc',
